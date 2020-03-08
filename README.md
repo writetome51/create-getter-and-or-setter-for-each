@@ -1,8 +1,8 @@
-# createGetterAndOrSetterForEach(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;obj,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propertyNames: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;configuration: GetterSetterConfiguration<br>): void
+# createGetterAndOrSetterForEach(<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propertyNames: string[],<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;config: GetterSetterConfiguration,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;object<br>): void
 
-Creates a bunch of properties of `obj` that need getter and/or setter
-functions that all do the same thing. It attaches the same getter function and/or
-setter function to each property. 
+Creates a bunch of properties of `object` that need getter and/or setter functions  
+that all do the same thing. It attaches the same getter function and/or setter  
+function to each property in `propertyNames`. 
 
 
 ## GetterSetterConfiguration:  {
@@ -19,9 +19,58 @@ setter function to each property.
 	    // returns the getter function.
 }
 
+## Examples
+```ts
+let obj = {__greeting: 'hello', __age: 0};
 
-```
+createGetterAndOrSetterForEach(
+	['greeting', 'age'],
 
+	{
+		get_getterFunction: function (propertyName) {
+			return function () {
+				return this[`__${propertyName}`];
+			};
+		},
+		get_setterFunction: function (propertyName) {
+			return function (value) {
+				value += ', sir.';
+				this[`__${propertyName}`] = value;
+			};
+		}
+	},
+
+	obj
+);
+
+console.log(obj.greeting); // 'hello'
+console.log(obj.age); // '0'
+obj.greeting = 'How are you';
+obj.age = 1000;
+console.log(obj.greeting); // 'How are you, sir.'
+console.log(obj.age); // '1000, sir.'
+
+
+obj = {__greeting: 'hello', __age: 0};
+
+createGetterAndOrSetterForEach(
+	['greeting', 'age'],
+
+	{
+		get_getterFunction: function (propertyName) {
+			return function () {
+				return this[`__${propertyName}`] + ', sir.';
+			};
+		}
+	},
+
+	obj
+);
+
+console.log(obj.greeting); // 'hello, sir.'
+console.log(obj.age); // '0, sir.'
+
+obj.age = 1; // triggers error, because age is read-only now.
 ```
 
 
@@ -30,12 +79,14 @@ setter function to each property.
 
 
 ## Loading
-```
+```ts
 // If using TypeScript:
-import { BaseClass } from '@writetome51/create-getter-and-or-setter-for-each';
+import { createGetterAndOrSetterForEach } 
+    from '@writetome51/create-getter-and-or-setter-for-each';
 // If using ES5 JavaScript:
-var BaseClass = 
-	require('@writetome51/create-getter-and-or-setter-for-each').createGetterAndOrSetterForEach;
+var createGetterAndOrSetterForEach = 
+    require('@writetome51/create-getter-and-or-setter-for-each')
+    .createGetterAndOrSetterForEach;
 ```
 
 ## License
