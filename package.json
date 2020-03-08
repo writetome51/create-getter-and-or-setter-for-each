@@ -1,0 +1,30 @@
+{
+  "name": "@writetome51/create-getter-and-or-setter-for-each",
+  "version": "0.0.1",
+  "description": "Use this method with an object to create a bunch of properties that need getter and/or setter functions that all do the same thing. It attaches the same getter function and/or setter function to each property",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/writetome51/create-getter-and-or-setter-for-each.git"
+  },
+  "keywords": [
+    "object",
+    "property",
+    "getter",
+    "setter",
+    "function",
+    "typescript"
+  ],
+  "author": "Steve Thompson",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/writetome51/create-getter-and-or-setter-for-each/issues"
+  },
+  "homepage": "https://github.com/writetome51/create-getter-and-or-setter-for-each#readme",
+  "dependencies": {
+  }
+}
