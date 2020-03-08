@@ -5,42 +5,34 @@ that all do the same thing. It attaches the same getter function and/or setter
 function to each property in `propertyNames`. 
 
 
-## GetterSetterConfiguration:  {
-        get_setterFunction?: (
-             propertyName: string, index?: number, propertyNames?: string[]
-        ) => (value) => void,
-	    // get_setterFunction takes the property name as first argument and 
-	    // returns the setter function.
-	    
-        get_getterFunction?: (
-             propertyName: string, index?: number, propertyNames?: string[]
-        ) => () => any
-	    // get_getterFunction takes the property name as first argument and 
-	    // returns the getter function.
-}
+## GetterSetterConfiguration: {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_setterFunction?: (<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propertyName: string,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index?: number,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propertyNames?: string[]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) => (value) => void;<br><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;get_getterFunction?: (<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propertyName: string,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;index?: number,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;propertyNames?: string[]<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;) => () => any;<br>}
+`get_setterFunction` takes the property name as first argument and returns the setter  
+function.  
+`get_getterFunction` takes the property name as first argument and returns the getter  
+function.
 
 ## Examples
 ```ts
 let obj = {__greeting: 'hello', __age: 0};
 
 createGetterAndOrSetterForEach(
-	['greeting', 'age'],
+    ['greeting', 'age'],
 
-	{
-		get_getterFunction: function (propertyName) {
-			return function () {
-				return this[`__${propertyName}`];
-			};
-		},
-		get_setterFunction: function (propertyName) {
-			return function (value) {
-				value += ', sir.';
-				this[`__${propertyName}`] = value;
-			};
-		}
-	},
+    {
+        get_getterFunction: function (propertyName) {
+            return function () {
+                return this[`__${propertyName}`];
+            };
+        },
+        get_setterFunction: function (propertyName) {
+            return function (value) {
+                value += ', sir.';
+                this[`__${propertyName}`] = value;
+            };
+        }
+    },
 
-	obj
+    obj
 );
 
 console.log(obj.greeting); // 'hello'
@@ -54,17 +46,17 @@ console.log(obj.age); // '1000, sir.'
 obj = {__greeting: 'hello', __age: 0};
 
 createGetterAndOrSetterForEach(
-	['greeting', 'age'],
+    ['greeting', 'age'],
 
-	{
-		get_getterFunction: function (propertyName) {
-			return function () {
-				return this[`__${propertyName}`] + ', sir.';
-			};
-		}
-	},
+    {
+        get_getterFunction: function (propertyName) {
+            return function () {
+                return this[`__${propertyName}`] + ', sir.';
+            };
+        }
+    },
 
-	obj
+    obj
 );
 
 console.log(obj.greeting); // 'hello, sir.'
